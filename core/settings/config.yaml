@@ -1,4 +1,6 @@
-payments:
-  timeout:
-  username:
-  password:
+defaults.tiemout: 60
+default.frequency: 10
+payments.timeout: 60
+payment.frequency: 5
+payments.user: None
+payments.password: None

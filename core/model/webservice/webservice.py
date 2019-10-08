@@ -1,21 +1,27 @@
-from core.common.exceptions import NoWebServiceCredentialsProvided
+from core.common.exceptions import NoWebServiceCredentialsProvided, JsonWebServiceException
+from core.common.config import Config
+from core.objects import logger
+import pprint
+from core.libs.request_lib import send_post_json
 
 
 class JsonWebServiceComponent:
-    def __init__(self):
+    def __init__(self, area=None):
         if not hasattr(self, "credentials"):
-            raise NoWebServiceCredentialsProvided(
-                "No credentials mapped from Environment to webservice system component"
-            )
+            raise NoWebServiceCredentialsProvided()
+
+        if area:
+            timeout = Config[f"{area}.timeout"]
+        else:
+            timeout = Config["default.timeout"]
 
         _definition = {
             "endpoint": None,
             "login": None,
             "password": None,
-            "timeout": Config["timeout.webservice"]
+            "timeout": timeout
         }
 
-        # todo: refactor - self.credentials will be defined in nested classes as property to Class object
         for key, value in _definition.iteritems():
             if self.credentials.get(key):
                 value = self.credentials.get(key)
@@ -26,11 +32,11 @@ class JsonWebServiceComponent:
     def send_request(self, payload):
         payload['credentials']['username'] = self._config['login']
         payload['credentials']['password'] = self._config['password']
-        logging.info("Send JSON thru POST to url {}".format(self._config['endpoint']))
-        logging.info("Sending payload: \n{}".format(pprint.pformat(payload)))
+        logger.info("Send JSON thru POST to url {}".format(self._config['endpoint']))
+        logger.info("Sending payload: \n{}".format(pprint.pformat(payload)))
         try:
             response = send_post_json(self._config['endpoint'], payload)
-            logging.info("Get response: \n{}".format(pprint.pformat(response)))
+            logger.info("Get response: \n{}".format(pprint.pformat(response)))
         except Exception as e:
             raise JsonWebServiceException(e)
         return response

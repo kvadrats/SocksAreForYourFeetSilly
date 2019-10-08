@@ -114,9 +114,7 @@ CATALOGUE_GET_SIZE = {
 }
 
 CATALOGUE_GET_TAGS = {
-  "tags": [
-    None  # STRING
-  ]
+  "tags": [] # list of strings
 }
 
 USER_LOGIN = CUSTOMERS = {

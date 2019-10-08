@@ -42,13 +42,14 @@ class JsonWebServiceComponent:
             raise JsonWebServiceException(e)
         return response
 
-    def send_get_request(self, payload=None):
+    def send_get_request(self, payload=None, url_ending=None):
         # payload['credentials']['username'] = self._config['login']
         # payload['credentials']['password'] = self._config['password']
-        logger.info("Send JSON thru POST to url {}".format(self._config['endpoint']))
+        endpoint = self._config['endpoint'] + "/" + url_ending if url_ending else self._config['endpoint']
+        logger.info("Send JSON thru POST to url {}".format(endpoint))
         logger.info("Sending payload: \n{}".format(pprint.pformat(payload)))
         try:
-            response = send_get_json(self._config['endpoint'], payload)
+            response = send_get_json(endpoint, payload)
             logger.info("GET response: \n{}".format(pprint.pformat(response)))
         except Exception as e:
             raise JsonWebServiceException(e)

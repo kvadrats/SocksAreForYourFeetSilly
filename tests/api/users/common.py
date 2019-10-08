@@ -1,13 +1,5 @@
-from tests.api.common import APITestCase, AbstractJsonWS
-from core.common.config import Config
-
-import core.model.webservice.requests as req
-
-
-class UserJsonWS(AbstractJsonWS):
-    credentials = Config["users"]
+from tests.api.common import APITestCase
 
 
 class UserTestCase(APITestCase):
-    json = UserJsonWS()
-    requests = req
+    pass

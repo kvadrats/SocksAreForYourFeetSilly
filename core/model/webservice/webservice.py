@@ -48,7 +48,7 @@ class JsonWebServiceComponent:
         logger.info("Send JSON thru POST to url {}".format(self._config['endpoint']))
         logger.info("Sending payload: \n{}".format(pprint.pformat(payload)))
         try:
-            response = send_get_json(self._config['endpoint'])
+            response = send_get_json(self._config['endpoint'], payload)
             logger.info("GET response: \n{}".format(pprint.pformat(response)))
         except Exception as e:
             raise JsonWebServiceException(e)

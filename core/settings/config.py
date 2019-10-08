@@ -6,12 +6,12 @@ class StaticObjectDictionary(type):
         return cls._objects[val]
 
     def __getattr__(cls, item):
+        # if not hasattr(cls, "_objects"):
         cls.load()
         return cls.__dict__[item]
 
 
-class AbstractStaticYaml(object):
-    __metaclass__ = StaticObjectDictionary
+class AbstractStaticYaml(object, metaclass=StaticObjectDictionary):
 
     @classmethod
     def load(cls):

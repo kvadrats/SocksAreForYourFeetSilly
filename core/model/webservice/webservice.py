@@ -1,8 +1,9 @@
-from core.common.exceptions import NoWebServiceCredentialsProvided, JsonWebServiceException
-from core.common.config import Config
-from core.objects import logger
 import pprint
+
+from core.common.config import Config
+from core.common.exceptions import NoWebServiceCredentialsProvided, JsonWebServiceException
 from core.libs.request_lib import send_post_json
+from core.objects import logger
 
 
 class JsonWebServiceComponent:
@@ -11,9 +12,9 @@ class JsonWebServiceComponent:
             raise NoWebServiceCredentialsProvided()
 
         if area:
-            timeout = Config[f"{area}.timeout"]
+            timeout = Config[f"{area}"]["timeout"]
         else:
-            timeout = Config["default.timeout"]
+            timeout = Config["default"]["timeout"]
 
         _definition = {
             "endpoint": None,
@@ -22,7 +23,7 @@ class JsonWebServiceComponent:
             "timeout": timeout
         }
 
-        for key, value in _definition.iteritems():
+        for key, value in _definition.items():
             if self.credentials.get(key):
                 value = self.credentials.get(key)
             _definition[key] = value
@@ -30,8 +31,8 @@ class JsonWebServiceComponent:
         self._config = self.credentials = _definition.copy()
 
     def send_request(self, payload):
-        payload['credentials']['username'] = self._config['login']
-        payload['credentials']['password'] = self._config['password']
+        # payload['credentials']['username'] = self._config['login']
+        # payload['credentials']['password'] = self._config['password']
         logger.info("Send JSON thru POST to url {}".format(self._config['endpoint']))
         logger.info("Sending payload: \n{}".format(pprint.pformat(payload)))
         try:

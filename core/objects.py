@@ -1,3 +1,3 @@
 from core.common.logging import Logger
 
-logger = Logger()
+logger = Logger().logger

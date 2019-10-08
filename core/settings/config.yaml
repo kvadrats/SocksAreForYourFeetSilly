@@ -1,6 +1,8 @@
-defaults.tiemout: 60
-default.frequency: 10
-payments.timeout: 60
-payment.frequency: 5
-payments.user: None
-payments.password: None
+default:
+  timeout: 60
+  frequency: 5
+  endpoint: http://ec2-54-162-62-231.compute-1.amazonaws.com/register
+users:
+  timeout: 60
+  frequency: 5
+  endpoint: http://ec2-54-162-62-231.compute-1.amazonaws.com/register

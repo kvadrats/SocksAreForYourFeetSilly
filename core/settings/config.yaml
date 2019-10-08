@@ -6,3 +6,7 @@ users:
   timeout: 60
   frequency: 5
   endpoint: http://ec2-54-162-62-231.compute-1.amazonaws.com/register
+catalogues:
+  timeout: 60
+  frequency: 5
+  endpoint: http://ec2-54-162-62-231.compute-1.amazonaws.com/tags
